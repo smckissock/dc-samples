@@ -18,39 +18,75 @@
         <div class='row'>
             <div class='span12'>
                 <div class="dc-data-count" style="float: left;"> 
-                    <h3>US Foreign Assistance&nbsp; 
+                    <h3>US Foreign Assistance 2006 - 2015&nbsp; 
                       <!--  <span class="filter-sum"></span>
                         <span> dollars selected out of </span>
                         <span class="total-sum"></span>-->
                         <span> | </span> 
                         <span> <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a></span> 
                     </h3>
-                    <div id="current-filters"></div>
                </div>
             </div>
         </div>
 
         <div class='row'>
             <div class='span12' id='dc-fiscal-year-chart'>
-                <h4>Fiscal Years</h4>
+                <h4>Fiscal Year</h4>
             </div>
         </div>
+
+        <div class='row'>
+            <div class='span3' id='dc-operating-unit-chart'><h4>Operating Unit</h4></div>
+            <div class='span3' id='dc-agency-chart'><h4>Agency</h4></div>
+            <div class='span3' id='dc-category-chart'><h4>Category</h4></div>
+            <div class='span3' id='dc-sector-chart'><h4>Sector</h4></div>
+        </div>
+
     </div>
 </body>
 
 <script>
     var fiscalYearChart = dc.barChart("#dc-fiscal-year-chart");
 
-    d3.csv("data/foreignAssistance.csv", function (data) {
-        console.log("Hello");
+    var operatingUnitChart = dc.rowChart("#dc-operating-unit-chart");
+    var agencyChart = dc.rowChart("#dc-agency-chart");
+    var categoryChart = dc.rowChart("#dc-category-chart");
+    var sectorChart = dc.rowChart("#dc-sector-chart");
 
+    d3.csv("data/foreignAssistance.csv", function (data) {
+
+        data.forEach(function (d) {
+            if (d.category == "NULL") {
+                d.category = "Unspecified";
+            }
+            if (d.sector == "NULL") {
+                d.sector = "Unspecified";
+            }
+        });
+
+       
         var facts = crossfilter(data);
         
-        var fiscalYearDim = facts.dimension(function (d) { return d.fiscalYear; });
-        var fiscalYearGroupSum = fiscalYearDim.group().reduceSum(function(fact) { return fact.amount; }) 
+        var fiscalYearDim = facts.dimension(function(d) { return d.fiscalYear; });
+        var fiscalYearGroupSum = fiscalYearDim.group().reduceSum(function (fact) { return fact.amount; });
+
+        var operatingUnitDim = facts.dimension(function (d) { return d.operatingUnit; });
+        var operatingUnitGroupSum = operatingUnitDim.group().reduceSum(function (fact) { return fact.amount; });
+
+        var agencyDim = facts.dimension(function (d) { return d.agency; });
+        var agencyGroupSum = agencyDim.group().reduceSum(function (fact) { return fact.amount; });
+
+        var categoryDim = facts.dimension(function (d) { return d.category; });
+        var categoryGroupSum = categoryDim.group().reduceSum(function (fact) { return fact.amount; });
+
+        var sectorDim = facts.dimension(function (d) { return d.sector; });
+        var sectorGroupSum = sectorDim.group().reduceSum(function (fact) { return fact.amount; });
+
+        var lightBlue = ['#9ecae1'];
+
 
         fiscalYearChart
-            .width(1000)
+            .width(1000) // bootstrap default is 1170
             .height(200).margins({ top: 10, right: 10, bottom: 20, left: 100 })
             .dimension(fiscalYearDim)
             .group(fiscalYearGroupSum)
@@ -62,6 +98,46 @@
             .elasticY(true)
             .xAxis().tickFormat(d3.format("d")); // No commas for thousands
 
+        operatingUnitChart
+            .width(250)
+            .height(1000).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .dimension(operatingUnitDim)
+            .group(operatingUnitGroupSum)
+            .transitionDuration(500)
+            .data(function (measure) { return operatingUnitGroupSum.top(40); })
+            .ordinalColors(lightBlue)
+            .elasticX(true);
+
+        agencyChart
+            .width(250)
+            .height(200).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .dimension(agencyDim)
+            .group(agencyGroupSum)
+            .transitionDuration(500)
+            .data(function (measure) { return agencyGroupSum.top(40); })
+            .ordinalColors(lightBlue)
+            .elasticX(true);
+
+        categoryChart
+            .width(250)
+            .height(300).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .dimension(categoryDim)
+            .group(categoryGroupSum)
+            .transitionDuration(500)
+            .data(function (measure) { return categoryGroupSum.top(40); })
+            .ordinalColors(lightBlue)
+            .elasticX(true);
+
+        sectorChart
+            .width(250)
+            .height(1000).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .dimension(sectorDim)
+            .group(sectorGroupSum)
+            .transitionDuration(500)
+            .data(function (measure) { return sectorGroupSum.top(40); })
+            .ordinalColors(lightBlue)
+            .elasticX(true);
+          
         dc.renderAll();
     });
 
