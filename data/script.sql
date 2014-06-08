@@ -27,7 +27,7 @@ GO
 
 
 -- Remove Benefitting country and rows without money 
-SELECT fiscalYear, FiscalYearType, account, agency, operatingUnit, category, sector, amount 
+SELECT fiscalYear, fiscalYearType, account, agency, operatingUnit, category, sector, amount 
 FROM Planned 
 WHERE amount > 0
 

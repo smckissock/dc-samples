@@ -12,7 +12,59 @@
     <link href='css\bootstrap.min.css' rel='stylesheet' type='text/css'>
     <link href='css\dc.css' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
-    Hello
+    <div class='container' style='font: 10px sans-serif;'>
+        <div class='row'>
+            <div class='span12'>
+                <div class="dc-data-count" style="float: left;"> 
+                    <h3>US Foreign Assistance&nbsp; 
+                      <!--  <span class="filter-sum"></span>
+                        <span> dollars selected out of </span>
+                        <span class="total-sum"></span>-->
+                        <span> | </span> 
+                        <span> <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a></span> 
+                    </h3>
+                    <div id="current-filters"></div>
+               </div>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='span12' id='dc-fiscal-year-chart'>
+                <h4>Fiscal Years</h4>
+            </div>
+        </div>
+    </div>
 </body>
+
+<script>
+    var fiscalYearChart = dc.barChart("#dc-fiscal-year-chart");
+
+    d3.csv("data/foreignAssistance.csv", function (data) {
+        console.log("Hello");
+
+        var facts = crossfilter(data);
+        
+        var fiscalYearDim = facts.dimension(function (d) { return d.fiscalYear; });
+        var fiscalYearGroupSum = fiscalYearDim.group().reduceSum(function(fact) { return fact.amount; }) 
+
+        fiscalYearChart
+            .width(1000)
+            .height(200).margins({ top: 10, right: 10, bottom: 20, left: 100 })
+            .dimension(fiscalYearDim)
+            .group(fiscalYearGroupSum)
+            .transitionDuration(500)
+            .centerBar(true)
+            .gap(10)  // Gap between bars
+            .filter([2012.5, 2013.5]) // Preset filter to 2013
+            .x(d3.scale.linear().domain([2005.5, 2015.5]))
+            .elasticY(true)
+            .xAxis().tickFormat(d3.format("d")); // No commas for thousands
+
+        dc.renderAll();
+    });
+
+</script>
+
 </html>
