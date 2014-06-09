@@ -18,54 +18,54 @@
         <div class='row'>
             <div class='span12'>
                 <div class="dc-data-count" style="float: left;"> 
-                    <h3>US Foreign Assistance 2006 - 2015&nbsp; 
+                    <h3>Planned US Foreign Assistance 2006 - 2015&nbsp; 
                       <!--  <span class="filter-sum"></span>
                         <span> dollars selected out of </span>
                         <span class="total-sum"></span>-->
                         <span> | </span> 
                         <span> <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a></span> 
-                    </h3>
+                    </h3>           
                </div>
             </div>
         </div>
 
         <div class='row'>
-            <div class='span12' id='dc-fiscal-year-chart'>
-                <h4>Fiscal Year</h4>
-            </div>
+            <div class='span9' id='dc-fiscal-year-bar-chart'><h4>Fiscal Year</h4></div> 
+            <div class='span3' id='dc-appropriation-type-pie-chart'><h4>Appropriation Type</h4></div>
         </div>
 
         <div class='row'>
-            <div class='span3' id='dc-operating-unit-chart'><h4>Operating Unit</h4></div>
-            <div class='span3' id='dc-agency-chart'><h4>Agency</h4></div>
-            <div class='span3' id='dc-category-chart'><h4>Category</h4></div>
-            <div class='span3' id='dc-sector-chart'><h4>Sector</h4></div>
+            <div class='span3' id='dc-operating-unit-row-chart'><h4>Operating Unit</h4></div>
+            <div class='span3' id='dc-agency-row-chart'><h4>Agency</h4></div>
+            <div class='span3' id='dc-category-row-chart'><h4>Category</h4></div>
+            <div class='span3' id='dc-sector-row-chart'><h4>Sector</h4></div>
         </div>
 
     </div>
 </body>
 
 <script>
-    var fiscalYearChart = dc.barChart("#dc-fiscal-year-chart");
+    var fiscalYearChart = dc.barChart("#dc-fiscal-year-bar-chart");
 
-    var operatingUnitChart = dc.rowChart("#dc-operating-unit-chart");
-    var agencyChart = dc.rowChart("#dc-agency-chart");
-    var categoryChart = dc.rowChart("#dc-category-chart");
-    var sectorChart = dc.rowChart("#dc-sector-chart");
+    var operatingUnitChart = dc.rowChart("#dc-operating-unit-row-chart");
+    var agencyChart = dc.rowChart("#dc-agency-row-chart");
+    var categoryChart = dc.rowChart("#dc-category-row-chart");
+    var sectorChart = dc.rowChart("#dc-sector-row-chart");
+    var appropriationTypeChart = dc.pieChart("#dc-appropriation-type-pie-chart");
 
     d3.csv("data/foreignAssistance.csv", function (data) {
 
         data.forEach(function (d) {
-            if (d.category == "NULL") {
+            d.amount = +d.amount;
+
+            if (d.category == "NULL") 
                 d.category = "Unspecified";
-            }
-            if (d.sector == "NULL") {
+            if (d.sector == "NULL") 
                 d.sector = "Unspecified";
-            }
         });
 
-       
         var facts = crossfilter(data);
+       
         
         var fiscalYearDim = facts.dimension(function(d) { return d.fiscalYear; });
         var fiscalYearGroupSum = fiscalYearDim.group().reduceSum(function (fact) { return fact.amount; });
@@ -82,61 +82,82 @@
         var sectorDim = facts.dimension(function (d) { return d.sector; });
         var sectorGroupSum = sectorDim.group().reduceSum(function (fact) { return fact.amount; });
 
+        var appropriationTypeDim = facts.dimension(function (d) { 
+            if (d.fiscalYearType.indexOf("Base") != -1)
+                return "Base";
+            if (d.fiscalYearType.indexOf("Supp") != -1)
+                return "Supplemental";
+            return "Request";
+        });
+        var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(function (fact) { return fact.amount; });
+
         var lightBlue = ['#9ecae1'];
 
 
         fiscalYearChart
-            .width(1000) // bootstrap default is 1170
+            .width(700) // bootstrap default is 1170
             .height(200).margins({ top: 10, right: 10, bottom: 20, left: 100 })
             .dimension(fiscalYearDim)
             .group(fiscalYearGroupSum)
             .transitionDuration(500)
             .centerBar(true)
             .gap(10)  // Gap between bars
-            .filter([2012.5, 2013.5]) // Preset filter to 2013
+            .filter([2005.5, 2015.5]) // Preset filter to 2013
             .x(d3.scale.linear().domain([2005.5, 2015.5]))
             .elasticY(true)
             .xAxis().tickFormat(d3.format("d")); // No commas for thousands
 
+        appropriationTypeChart
+            .width(200)
+            .height(200)
+            .radius(80)
+            //.innerRadius(20) // Donut!
+            .dimension(appropriationTypeDim)
+            .group(appropriationTypeGroupSum);
+
         operatingUnitChart
             .width(250)
-            .height(1000).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .height(1000).margins({ top: 0, right: 10, bottom: 20, left: 10 })
             .dimension(operatingUnitDim)
             .group(operatingUnitGroupSum)
             .transitionDuration(500)
             .data(function (measure) { return operatingUnitGroupSum.top(40); })
             .ordinalColors(lightBlue)
-            .elasticX(true);
+            .elasticX(true)
+            .xAxis().tickFormat(d3.format(".2s")); // Billioms
 
         agencyChart
             .width(250)
-            .height(200).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .height(200).margins({ top: 0, right: 10, bottom: 20, left: 10 })
             .dimension(agencyDim)
             .group(agencyGroupSum)
             .transitionDuration(500)
             .data(function (measure) { return agencyGroupSum.top(40); })
             .ordinalColors(lightBlue)
-            .elasticX(true);
+            .elasticX(true)
+            .xAxis().tickFormat(d3.format(".2s"));
 
         categoryChart
             .width(250)
-            .height(300).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .height(300).margins({ top: 0, right: 10, bottom: 20, left: 10 })
             .dimension(categoryDim)
             .group(categoryGroupSum)
             .transitionDuration(500)
             .data(function (measure) { return categoryGroupSum.top(40); })
             .ordinalColors(lightBlue)
-            .elasticX(true);
+            .elasticX(true)
+            .xAxis().tickFormat(d3.format(".2s"));
 
         sectorChart
             .width(250)
-            .height(1000).margins({ top: 10, right: 10, bottom: 20, left: 10 })
+            .height(1000).margins({ top: 0, right: 10, bottom: 20, left: 10 })
             .dimension(sectorDim)
             .group(sectorGroupSum)
             .transitionDuration(500)
             .data(function (measure) { return sectorGroupSum.top(40); })
             .ordinalColors(lightBlue)
-            .elasticX(true);
+            .elasticX(true)
+            .xAxis().tickFormat(d3.format(".2s"));
           
         dc.renderAll();
     });
