@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Dimensional Charting Sample</title>
+
+    <script src='../lib/d3.js' type='text/javascript'></script>
+    <script src='../lib/crossfilter.js' type='text/javascript'></script>
+    <script src='../lib/dc.js' type='text/javascript'></script>
+    <script src='../lib/bootstrap.min.js' type='text/javascript'></script>
+    <script src='js/foreignAssistance.js' type='text/javascript'></script>
+
+    <link href='css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='css/dc.css' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <div class='container' style='font: 10px sans-serif;'>
+        <div class='row'>
+            <div class='span12'>
+                <div class="dc-data-count" style="float: left;"> 
+                    <h3>Planned US Foreign Assistance 2006 - 2015&nbsp; 
+                      <!--  <span class="filter-sum"></span>
+                        <span> dollars selected out of </span>
+                        <span class="total-sum"></span>-->
+                        <span> | </span> 
+                        <span> <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a></span> 
+                    </h3>           
+               </div>
+            </div>
+        </div>
+
+        <div class='row'>
+            <div class='span9' id='dc-fiscal-year-bar-chart'><h4>Fiscal Year</h4></div> 
+            <div class='span3' id='dc-appropriation-type-pie-chart'><h4>Appropriation Type</h4></div>
+        </div>
+
+        <div class='row'>
+            <div class='span3' id='dc-operating-unit-row-chart'><h4>Operating Unit</h4></div>
+            <div class='span3' id='dc-agency-row-chart'><h4>Agency</h4></div>
+            <div class='span3' id='dc-category-row-chart'><h4>Category</h4></div>
+            <div class='span3' id='dc-sector-row-chart'><h4>Sector</h4></div>
+        </div>
+    </div>
+</body>
+
+</html>
