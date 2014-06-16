@@ -20,7 +20,30 @@ d3.csv("data/foreignAssistance.csv", function (data) {
             }
     });
     var facts = crossfilter(data);
+
+
+    var totalGroup = facts.groupAll().reduce(
+      function (p, v) {
+          p += +v.amount;
+          return p;
+      },
+      function (p, v) {
+          p -= +v.amount;
+          return p;
+      },
+      function () { return 0 }
+    );
     
+    var average = function (d) {
+        debugger;
+        return d;
+    };
+
+    debugger;
+    dc.numberDisplay("#dc-chart-total")
+        .group(totalGroup)
+        .valueAccessor(average);
+
     var fiscalYearDim = facts.dimension(dc.pluck('fiscalYear'));
     var fiscalYearGroupSum = fiscalYearDim.group().reduce(
         function (p, v) {
@@ -32,7 +55,7 @@ d3.csv("data/foreignAssistance.csv", function (data) {
             return p;
         },
         function () { return {}; }
-    );             
+    );
     dc.barChart("#dc-chart-fiscalYear")
         .width(700) // bootstrap default is 1170
         .height(200).margins({ top: 10, right: 10, bottom: 20, left: 100 })
