@@ -1,7 +1,7 @@
 'use strict';
 
 d3.csv("data/foreignAssistance.csv", function (data) {
-
+    
     data.forEach(function (d) {
         d.amount = +d.amount;
 
@@ -16,11 +16,12 @@ d3.csv("data/foreignAssistance.csv", function (data) {
             if (d.fiscalYearType.indexOf("Supp") != -1) {
                 d.appropriationType = "Supplemental"
             } else {
+                debugger;
                 d.appropriationType = "Request";
             }
     });
-    var facts = crossfilter(data);
 
+    var facts = crossfilter(data);
 
     var totalGroup = facts.groupAll().reduce(
       function (p, v) {
@@ -34,15 +35,13 @@ d3.csv("data/foreignAssistance.csv", function (data) {
       function () { return 0 }
     );
     
-    var average = function (d) {
-        debugger;
-        return d;
-    };
 
-    debugger;
     dc.numberDisplay("#dc-chart-total")
         .group(totalGroup)
-        .valueAccessor(average);
+        .valueAccessor(function (d) {
+            return d / 1000000000;
+        })
+        .formatNumber( function (d) { return Math.round(d) + " Billion"; });
 
     var fiscalYearDim = facts.dimension(dc.pluck('fiscalYear'));
     var fiscalYearGroupSum = fiscalYearDim.group().reduce(
@@ -56,22 +55,22 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         },
         function () { return {}; }
     );
-    dc.barChart("#dc-chart-fiscalYear")
+    var bar = dc.barChart("#dc-chart-fiscalYear")
         .width(700) // bootstrap default is 1170
         .height(200).margins({ top: 10, right: 10, bottom: 20, left: 100 })
         .dimension(fiscalYearDim)
         .group(fiscalYearGroupSum, "Base").valueAccessor(function (d) { return d.value["Base"]; })
         .stack(fiscalYearGroupSum, "Supplemental", function (d) { return d.value["Supplemental"]; })
-        .stack(fiscalYearGroupSum, "Request",      function (d) { return d.value["Request"]; })
+        .stack(fiscalYearGroupSum, "Request", function (d) { return d.value["Request"]; })
         .transitionDuration(500)
         .legend(dc.legend().x(110).y(20))
         .centerBar(true)
         .gap(10)  // Gap between bars
-        .filter([2005.5, 2015.5]) // Preset filter to 2013
+        .filter([2005.5, 2015.5]) 
         .x(d3.scale.linear().domain([2005.5, 2015.5]))
         .elasticY(true)
         .xAxis().tickFormat(d3.format("d")); // No commas for thousands
-
+    
     var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
     var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(function (fact) { return fact.amount; });
     dc.pieChart("#dc-chart-appropriationType")
