@@ -16,30 +16,38 @@
 
 <body>
     <div class='container' style='font: 10px sans-serif;'>
+        
         <div class='row'>
             <div class='span12'>
                 <div class="dc-data-count" style="float: left;"> 
-                    <h3>Planned US Foreign Assistance 2006 - 2015&nbsp; 
-                        <span> | </span> 
-                        <span> <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a></span> 
-
-                    </h3>
+                    <h3>Planned US Foreign Assistance 2006 - 2015 | <span> <a href="javascript:dc.filterAll(); dc.renderAll();">Reset</a></span> </h3> 
                     <h4><span id="dc-chart-total"></span></h4>   
                 </div>
             </div>
         </div>
 
-        <div class='row'>
-            <div class='span9' id='dc-chart-fiscalYear'><h4>Fiscal Year</h4></div> 
-            <div class='span3' id='dc-chart-appropriationType'><h4>Appropriation Type</h4></div>
+        <div class='row'> 
+            <div class='span3' id='dc-chart-operatingUnit'><h4>Operating Unit</h4></div>
+            <div class='span9'>
+                <div class='row'>
+                    <div class='span2' id='dc-chart-appropriationType'><h4>Appropriation Type</h4></div>
+                    <div class='span7' id='dc-chart-fiscalYear'><h4>Fiscal Year</h4></div> 
+                </div>
+                <div class='row'>
+                    <div class='span2' id='dc-chart-agency'><h4>Agency</h4></div>
+                    <div class='span2' id='dc-chart-category'><h4>Category</h4></div>
+                    <div class='span2' id='dc-chart-sector'><h4>Sector</h4></div>
+                    <div class='span2' id='dc-chart-account'><h4>Account</h4></div>
+                </div>
+            </div> 
         </div>
 
-        <div class='row'>
-            <div class='span3' id='dc-chart-agency'><h4>Agency</h4></div>
-            <div class='span3' id='dc-chart-operatingUnit'><h4>Operating Unit</h4></div>
-            <div class='span3' id='dc-chart-category'><h4>Category</h4></div>
-            <div class='span3' id='dc-chart-sector'><h4>Sector</h4></div>
-        </div>
+        <!--<div class='row'>
+            <div class='span2' id='dc-chart-agency'><h4>Agency</h4></div>
+            <div class='span2' id='dc-chart-category'><h4>Category</h4></div>
+            <div class='span2' id='dc-chart-sector'><h4>Sector</h4></div>
+            <div class='span4' id='dc-chart-account'><h4>Account</h4></div>
+        </div>-->
     </div>
 </body>
 

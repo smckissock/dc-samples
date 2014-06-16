@@ -56,7 +56,7 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         function () { return {}; }
     );
     var bar = dc.barChart("#dc-chart-fiscalYear")
-        .width(700) // bootstrap default is 1170
+        .width(500) // bootstrap default is 1170
         .height(200).margins({ top: 10, right: 10, bottom: 20, left: 100 })
         .dimension(fiscalYearDim)
         .group(fiscalYearGroupSum, "Base").valueAccessor(function (d) { return d.value["Base"]; })
@@ -74,16 +74,18 @@ d3.csv("data/foreignAssistance.csv", function (data) {
     var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
     var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(function (fact) { return fact.amount; });
     dc.pieChart("#dc-chart-appropriationType")
-        .width(200)
-        .height(200)
-        .radius(80)
+        .width(180)
+        .height(180)
+        .radius(60)
         .dimension(appropriationTypeDim)
         .group(appropriationTypeGroupSum);
 
-    new RowChart(facts, "agency", 250, 20);
-    new RowChart(facts, "operatingUnit", 250, 20);
-    new RowChart(facts, "category", 250, 20);
-    new RowChart(facts, "sector", 250, 20);
+    new RowChart(facts, "operatingUnit", 200, 100);
+
+    new RowChart(facts, "agency", 150, 20);
+    new RowChart(facts, "category", 150, 20);
+    new RowChart(facts, "sector", 150, 20);
+    new RowChart(facts, "account", 150, 20);
 
     dc.renderAll();
 });
