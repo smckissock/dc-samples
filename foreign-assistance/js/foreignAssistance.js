@@ -22,15 +22,15 @@ d3.csv("data/foreignAssistance.csv", function (data) {
     var facts = crossfilter(data);
 
     var totalGroup = facts.groupAll().reduce(
-      function (p, v) {
-          p += +v.amount;
-          return p;
-      },
-      function (p, v) {
-          p -= +v.amount;
-          return p;
-      },
-      function () { return 0 }
+        function (p, v) {
+            p += +v.amount;
+            return p;
+        },
+        function (p, v) {
+            p -= +v.amount;
+            return p;
+        },
+        function () { return 0 }
     );
 
     dc.numberDisplay("#dc-chart-total")
@@ -39,7 +39,7 @@ d3.csv("data/foreignAssistance.csv", function (data) {
             return d / 1000000000;
         })
         .formatNumber( function (d) { return Math.round(d) + " Billion"; });
-
+    
     var fiscalYearDim = facts.dimension(dc.pluck('fiscalYear'));
     var fiscalYearGroupSum = fiscalYearDim.group().reduce(
         function (p, v) {
