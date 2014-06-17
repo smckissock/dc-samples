@@ -1,5 +1,6 @@
 'use strict';
 
+
 d3.csv("data/foreignAssistance.csv", function (data) {
     
     data.forEach(function (d) {
@@ -33,10 +34,12 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         function () { return 0 }
     );
 
+    var billion = 1000000000;
+
     dc.numberDisplay("#dc-chart-total")
         .group(totalGroup)
         .valueAccessor(function (d) {
-            return d / 1000000000;
+            return d / billion; 
         })
         .formatNumber( function (d) { return Math.round(d) + " Billion"; });
     
@@ -69,7 +72,7 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         .elasticY(true);
 
     bar.xAxis().tickFormat(d3.format("d"));
-    bar.yAxis().tickFormat(function (v) { return v / 1000000000 + " B"; });
+    bar.yAxis().tickFormat(function (v) { return v / billion + " B"; });
 
     var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
     var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(function (fact) { return fact.amount; });
@@ -104,7 +107,5 @@ var RowChart = function (facts, attribute, width, maxItems) {
         .elasticX(true)
         .ordinalColors(['#9ecae1'])
         .labelOffsetX(5)
-        //.label(function (d) { return "!!"; }) // return dashboard.label(d, that.chart, dashboard.all, lookupDimension); })
-        //.title(function (d) { return "!!"; }) //dashboard.title(d, that.chart, dashboard.all, lookupDimension); })
         .xAxis().ticks(4).tickFormat(d3.format(".2s"));
 }
