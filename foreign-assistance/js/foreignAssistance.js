@@ -16,7 +16,6 @@ d3.csv("data/foreignAssistance.csv", function (data) {
             if (d.fiscalYearType.indexOf("Supp") != -1) {
                 d.appropriationType = "Supplemental"
             } else {
-                debugger;
                 d.appropriationType = "Request";
             }
     });
@@ -55,22 +54,25 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         },
         function () { return {}; }
     );
+
     var bar = dc.barChart("#dc-chart-fiscalYear")
         .width(500) // bootstrap default is 1170
-        .height(200).margins({ top: 10, right: 10, bottom: 20, left: 100 })
+        .height(200).margins({ top: 10, right: 10, bottom: 20, left: 50 })
         .dimension(fiscalYearDim)
         .group(fiscalYearGroupSum, "Base").valueAccessor(function (d) { return d.value["Base"]; })
         .stack(fiscalYearGroupSum, "Supplemental", function (d) { return d.value["Supplemental"]; })
         .stack(fiscalYearGroupSum, "Request", function (d) { return d.value["Request"]; })
         .transitionDuration(500)
-        .legend(dc.legend().x(110).y(20))
+        .legend(dc.legend().x(60).y(20))
         .centerBar(true)
         .gap(10)  // Gap between bars
         .filter([2005.5, 2015.5]) 
         .x(d3.scale.linear().domain([2005.5, 2015.5]))
-        .elasticY(true)
-        .xAxis().tickFormat(d3.format("d")); // No commas for thousands
-    
+        .elasticY(true);
+
+    bar.xAxis().tickFormat(d3.format("d"));
+    bar.yAxis().tickFormat(function (v) { return v / 1000000000 + " B"; });
+
     var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
     var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(function (fact) { return fact.amount; });
     dc.pieChart("#dc-chart-appropriationType")
@@ -80,12 +82,11 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         .dimension(appropriationTypeDim)
         .group(appropriationTypeGroupSum);
 
-    new RowChart(facts, "operatingUnit", 200, 100);
-
-    new RowChart(facts, "agency", 150, 20);
-    new RowChart(facts, "category", 150, 20);
-    new RowChart(facts, "sector", 150, 20);
-    new RowChart(facts, "account", 150, 20);
+    new RowChart(facts, "operatingUnit", 250, 100);
+    new RowChart(facts, "agency", 250, 10);
+    new RowChart(facts, "category", 250, 10);
+    new RowChart(facts, "sector", 250, 50);
+    new RowChart(facts, "account", 250, 50);
 
     dc.renderAll();
 });
@@ -100,7 +101,7 @@ var RowChart = function (facts, attribute, width, maxItems) {
         .group(this.group)
         .data(function(measure) { return measure.top(maxItems); })
         .width(width)
-        .height(maxItems * 26)
+        .height(maxItems * 22)
         .margins({ top: 0, right: 10, bottom: 20, left: 10 })
         .elasticX(true)
         .ordinalColors(['#9ecae1'])
