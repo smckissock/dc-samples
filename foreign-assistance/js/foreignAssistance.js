@@ -5,21 +5,8 @@ d3.csv("data/foreignAssistance.csv", function (data) {
     
     data.forEach(function (d) {
         d.amount = +d.amount;
-
-        if (d.category == "NULL")
-            d.category = "Unspecified";
-        if (d.sector == "NULL")
-            d.sector = "Unspecified";
-
-        if (d.fiscalYearType.indexOf("Base") != -1) {
-            d.appropriationType = "Base"
-        } else
-            if (d.fiscalYearType.indexOf("Supp") != -1) {
-                d.appropriationType = "Supplemental"
-            } else {
-                d.appropriationType = "Request";
-            }
     });
+
     var facts = crossfilter(data);
 
     var totalGroup = facts.groupAll().reduce(
