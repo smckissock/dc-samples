@@ -29,8 +29,8 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         .valueAccessor(function (d) {
             return d / billion; 
         })
-        .formatNumber( function (d) { return Math.round(d) + " Billion"; });
-    
+        .formatNumber(function (d) { return Math.round(d) + " Billion"; });
+        
     var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
     var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(
         function (fact) { return fact.amount; });
@@ -69,6 +69,7 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         .x(d3.scale.linear().domain([2005.5, 2015.5]))
         .elasticY(true);
 
+    // these don't return the chart, so can't chain them 
     bar.xAxis().tickFormat(d3.format("d"));
     bar.yAxis().tickFormat(function (v) { return v / billion + " B"; });
 
@@ -80,7 +81,6 @@ d3.csv("data/foreignAssistance.csv", function (data) {
 
     dc.renderAll();
 });
-
 
 var RowChart = function (facts, attribute, width, maxItems) {
     this.dim = facts.dimension(dc.pluck(attribute));

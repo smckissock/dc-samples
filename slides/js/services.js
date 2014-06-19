@@ -79,6 +79,20 @@ angular.module('talkyApp.services', [])
         { imgUrl: 'total-group.png' },
         { imgUrl: 'number-display.png' },
         { imgUrl: 'pie-chart.png' },
+        { imgUrl: 'fiscal-year-group.png' },
+        { imgUrl: 'fiscal-year-chart.png' },
+        { imgUrl: 'tick-format.png' },
+        { imgUrl: 'row-chart-function.png' },
+        { imgUrl: 'call-row-chart-function.png' },
+
+        {
+            title: 'Questions',
+            decks: [
+                'In what year did Department of Defense spend the most money?',
+                'What country has the highest spending for malaria?',
+                'Which agencies do not break out plans by operating unit?',
+            ],
+        },
 
         {
             title: 'dc.js Issues',
