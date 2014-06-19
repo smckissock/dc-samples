@@ -1,14 +1,14 @@
+
 'use strict';
 
-
 d3.csv("data/foreignAssistance.csv", function (data) {
-    
     data.forEach(function (d) {
-        d.amount = +d.amount;
+        d.amount = +d.amount; // cast to numbers
     });
-
+    // put data in crossfilter
     var facts = crossfilter(data);
 
+    // one group for grand total
     var totalGroup = facts.groupAll().reduce(
         function (p, v) {
             p += +v.amount;
@@ -20,9 +20,10 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         },
         function () { return 0 }
     );
+    // or use convenience function 
+    //var totalGroup = facts.groupAll().reduceSum(function (d) { return +d.amount; });
 
     var billion = 1000000000;
-
     dc.numberDisplay("#dc-chart-total")
         .group(totalGroup)
         .valueAccessor(function (d) {
@@ -30,6 +31,16 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         })
         .formatNumber( function (d) { return Math.round(d) + " Billion"; });
     
+    var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
+    var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(
+        function (fact) { return fact.amount; });
+    dc.pieChart("#dc-chart-appropriationType")
+        .width(200)
+        .height(200)
+        .radius(80)
+        .dimension(appropriationTypeDim)
+        .group(appropriationTypeGroupSum);
+
     var fiscalYearDim = facts.dimension(dc.pluck('fiscalYear'));
     var fiscalYearGroupSum = fiscalYearDim.group().reduce(
         function (p, v) {
@@ -60,15 +71,6 @@ d3.csv("data/foreignAssistance.csv", function (data) {
 
     bar.xAxis().tickFormat(d3.format("d"));
     bar.yAxis().tickFormat(function (v) { return v / billion + " B"; });
-
-    var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
-    var appropriationTypeGroupSum = appropriationTypeDim.group().reduceSum(function (fact) { return fact.amount; });
-    dc.pieChart("#dc-chart-appropriationType")
-        .width(200)
-        .height(200)
-        .radius(80)
-        .dimension(appropriationTypeDim)    
-        .group(appropriationTypeGroupSum);
 
     new RowChart(facts, "operatingUnit", 300, 100);
     new RowChart(facts, "agency", 300, 10);

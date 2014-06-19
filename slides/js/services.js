@@ -75,6 +75,11 @@ angular.module('talkyApp.services', [])
             ],
         },
 
+        { imgUrl: 'get-data.png' },
+        { imgUrl: 'total-group.png' },
+        { imgUrl: 'number-display.png' },
+        { imgUrl: 'pie-chart.png' },
+
         {
             title: 'dc.js Issues',
             decks: [
