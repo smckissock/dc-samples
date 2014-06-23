@@ -82,22 +82,14 @@ angular.module('talkyApp.services', [])
         { imgUrl: 'code-01.png' },
         { imgUrl: 'code-02.png' },
         { imgUrl: 'code-03.png' },
+        { imgUrl: 'code-03-console.png' },
         { imgUrl: 'code-04.png' },
+        { imgUrl: 'code-04-console.png' },
         { imgUrl: 'code-05.png' },
         { imgUrl: 'code-06.png' },
         { imgUrl: 'code-07.png' },
         { imgUrl: 'code-08.png' },
-
-        //{ imgUrl: 'get-data.png' },
-        //{ imgUrl: 'total-group.png' },
-        //{ imgUrl: 'number-display.png' },
-        //{ imgUrl: 'pie-chart.png' },
-        //{ imgUrl: 'fiscal-year-group.png' },
-        //{ imgUrl: 'fiscal-year-chart.png' },
-        //{ imgUrl: 'tick-format.png' },
-        //{ imgUrl: 'row-chart-function.png' },
-        //{ imgUrl: 'call-row-chart-function.png' },
-
+        
         {
             title: 'Questions',
             decks: [

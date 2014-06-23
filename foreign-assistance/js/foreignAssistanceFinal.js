@@ -50,12 +50,12 @@ d3.csv("data/foreignAssistance.csv", function (data) {
     // 04 dimension and group for fiscal year - custom reducer  
     var fiscalYearDim = facts.dimension(dc.pluck('fiscalYear'));
     var fiscalYearGroupSum = fiscalYearDim.group().reduce(
-        function (p, v) { // add finction
-            p[v.appropriationType] = (p[v.appropriationType] || 0) + +v.amount;
-            return p;
-        },
+        function (p, v) { // add function
+              p[v.appropriationType] += v.amount;
+              return p;
+          },
         function (p, v) { // subtract function
-            p[v.appropriationType] = (p[v.appropriationType] || 0) - +v.amount;
+            p[v.appropriationType] -= v.amount;
             return p;
         },
         function () { // initial function
