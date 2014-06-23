@@ -10,17 +10,15 @@ d3.csv("data/foreignAssistance.csv", function (data) {
     // one group for grand total
     var totalGroup = facts.groupAll().reduce(
         function (p, v) {
-            p += +v.amount;
-            return p;
+            return p += v.amount;
         },
         function (p, v) {
-            p -= +v.amount;
-            return p;
+            return p -= v.amount;
         },
         function () { return 0 }
     );
     // or use convenience function 
-    //var totalGroup = facts.groupAll().reduceSum(function (d) { return +d.amount; });
+    //var totalGroup = facts.groupAll().reduceSum(dc.pluck("amount"));
 
     var billion = 1000000000;
     dc.numberDisplay("#dc-chart-total")
@@ -34,26 +32,18 @@ d3.csv("data/foreignAssistance.csv", function (data) {
          ["#74C365", // light green 
          "#006600",  // dark green 
          "#007BA7"]; // blue
-         
         
     var appropriationTypeDim = facts.dimension(dc.pluck('appropriationType'));
     var appropriationTypeGroupSum =
         appropriationTypeDim.group().reduceSum(dc.pluck("amount"));
     var pie = dc.pieChart("#dc-chart-appropriationType")
+        .dimension(appropriationTypeDim)
+        .group(appropriationTypeGroupSum)
         .width(200)
         .height(200)
         .radius(80)
-        .dimension(appropriationTypeDim)
-        .group(appropriationTypeGroupSum)
         .ordinalColors(appropriationTypeColors)
-        .colorAccessor(function (d) {
-            debugger;
-            if (d.key == "Base") return 0;
-            else if (d.key == "Supplemental") return 1
-            else return 2;
-        });
-
-
+      
     var fiscalYearDim = facts.dimension(dc.pluck('fiscalYear'));
     var fiscalYearGroupSum = fiscalYearDim.group().reduce(
         function (p, v) {
@@ -68,12 +58,12 @@ d3.csv("data/foreignAssistance.csv", function (data) {
     );
 
     var bar = dc.barChart("#dc-chart-fiscalYear")
-        .width(650) 
-        .height(200).margins({ top: 10, right: 30, bottom: 20, left: 50 })
         .dimension(fiscalYearDim)
         .group(fiscalYearGroupSum, "Base").valueAccessor(function (d) { return d.value.Base; })
         .stack(fiscalYearGroupSum, "Supplemental", function (d) { return d.value.Supplemental; })
         .stack(fiscalYearGroupSum, "Request", function (d) { return d.value.Request; })
+        .width(650) 
+        .height(200).margins({ top: 10, right: 30, bottom: 20, left: 50 })
         .legend(dc.legend().x(60).y(20))
         .gap(10)  // space between bars
         .centerBar(true)
@@ -83,9 +73,7 @@ d3.csv("data/foreignAssistance.csv", function (data) {
         .ordinalColors(appropriationTypeColors);
 
     // These don't return the chart, so can't chain them 
-
-    // Years: need "2005" not "2,005" 
-    bar.xAxis().tickFormat(d3.format("d"));
+    bar.xAxis().tickFormat(d3.format("d")); // need "2005" not "2,005" 
     bar.yAxis().tickFormat(function (v) { return v / billion + " B"; });
 
     new RowChart(facts, "operatingUnit", 300, 100);
@@ -97,19 +85,20 @@ d3.csv("data/foreignAssistance.csv", function (data) {
     dc.renderAll();
 });
 
-
 var RowChart = function (facts, attribute, width, maxItems) {
     this.dim = facts.dimension(dc.pluck(attribute));
-
     dc.rowChart("#dc-chart-" + attribute)
         .dimension(this.dim)
         .group(this.dim.group().reduceSum(dc.pluck("amount")))
-        .data(function(measure) { return measure.top(maxItems); })
+        .data(function(d) { return d.top(maxItems); })
         .width(width)
         .height(maxItems * 22)
         .margins({ top: 0, right: 10, bottom: 20, left: 20 })
         .elasticX(true)
-        .ordinalColors(['#9ecae1'])
+        .ordinalColors(['#9ecae1']) // light blue
         .labelOffsetX(5)
         .xAxis().ticks(4).tickFormat(d3.format(".2s"));
 }
+
+
+
