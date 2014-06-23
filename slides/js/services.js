@@ -17,12 +17,13 @@ angular.module('talkyApp.services', [])
         //},
 
         {
-            title: 'Plans',
+            title: 'Plan',
             decks: [
-                '1. What is this good for',
-                '2. Examples',
-                '2. Crossfilter',
-                '3. Make a chart'
+                '1. Examples',
+                '2. What is dc.js good for?',
+                '3. d3.js',
+                '4. Crossfilter',
+                '5. Make a dc chart'
             ],
             cap: 'Here\'s the outline for our talk tonight.'
         },
@@ -41,7 +42,7 @@ angular.module('talkyApp.services', [])
             title: 'Crossfilter', 
             decks: [
                 'http://square.github.io/crossfilter/',
-                'In broswer database',
+                'In broswer slicing and dicing for javacript arrays',
                 'Consumes JSON, CSV',
                 'Filters, groups, reduces - no joins!'
             ],
@@ -53,7 +54,7 @@ angular.module('talkyApp.services', [])
                 'http://dc-js.github.io/dc.js/',
                 'Build on crossfilter and d3',
                 'Many chart types',
-                'Easy to use, extensible (with effort)',
+                'Easy to use, extensible (with some effort)',
                 'Many examples'
             ],
         },
@@ -75,21 +76,33 @@ angular.module('talkyApp.services', [])
             ],
         },
 
-        { imgUrl: 'get-data.png' },
-        { imgUrl: 'total-group.png' },
-        { imgUrl: 'number-display.png' },
-        { imgUrl: 'pie-chart.png' },
-        { imgUrl: 'fiscal-year-group.png' },
-        { imgUrl: 'fiscal-year-chart.png' },
-        { imgUrl: 'tick-format.png' },
-        { imgUrl: 'row-chart-function.png' },
-        { imgUrl: 'call-row-chart-function.png' },
+
+        { imgUrl: 'code-00.png' },
+        { imgUrl: 'code-00-console.png' },
+        { imgUrl: 'code-01.png' },
+        { imgUrl: 'code-02.png' },
+        { imgUrl: 'code-03.png' },
+        { imgUrl: 'code-04.png' },
+        { imgUrl: 'code-05.png' },
+        { imgUrl: 'code-06.png' },
+        { imgUrl: 'code-07.png' },
+        { imgUrl: 'code-08.png' },
+
+        //{ imgUrl: 'get-data.png' },
+        //{ imgUrl: 'total-group.png' },
+        //{ imgUrl: 'number-display.png' },
+        //{ imgUrl: 'pie-chart.png' },
+        //{ imgUrl: 'fiscal-year-group.png' },
+        //{ imgUrl: 'fiscal-year-chart.png' },
+        //{ imgUrl: 'tick-format.png' },
+        //{ imgUrl: 'row-chart-function.png' },
+        //{ imgUrl: 'call-row-chart-function.png' },
 
         {
             title: 'Questions',
             decks: [
                 'In what year did Department of Defense spend the most money?',
-                'What country has the highest spending for malaria?',
+                'What country has the highest spending for malaria? (Filter to Health Category)',
                 'Which agencies do not break out plans by operating unit?',
             ],
         },
@@ -102,6 +115,17 @@ angular.module('talkyApp.services', [])
                 'Commit to d3 for full benefit'
             ],
         },
+
+        {
+              title: 'dc.js Future',
+              decks: [
+                  'Done - basic features are there',
+                  'Used in a lot of internal apps',
+                  'Version 2.0 to be released mid July',
+                  '2.x - more chart types: small multiples, tree maps',
+                  'Pluggable data layer (use something besides crossfilter)'
+              ],
+          },
     ];
 
     return slides;
