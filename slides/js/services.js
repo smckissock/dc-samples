@@ -5,7 +5,7 @@ angular.module('talkyApp.services', [])
 
     var slides = [
         {
-            title: 'Interactive Graphics with dc.js',
+            title: 'Interactive Graphics with dc.js & d3.js',
             decks: ['github.com/smckissock/dc-samples', 'scottmckissock@gmail.com'],
             cls: 'lightsalmon',
             cap: 'Hello! Today we are talking about ccrossfilter, dc, and interactive graphics.'
