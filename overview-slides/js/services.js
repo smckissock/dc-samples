@@ -98,7 +98,7 @@ angular.module('talkyApp.services', [])
          },
 
         {
-            title: 'dc- origins',
+            title: 'dc - origins',
             decks: [
                 'By Nick Qi Zhu - directly inspired by cross filter homepage',
                 '"Coordinated Visualizations"',
@@ -141,7 +141,7 @@ angular.module('talkyApp.services', [])
         
         
         {
-            title: 'dc.js Issues',
+            title: 'dc.js - issues',
             decks: [
                 'Too much data - 100k +',
                 'Too many svg elements',
@@ -150,7 +150,7 @@ angular.module('talkyApp.services', [])
         },
 
         {
-            title: 'dc.js Future',
+            title: 'dc.js - future',
             decks: [
                 'Done - basic features are there',
                 'Used in a lot of internal apps',
@@ -159,6 +159,24 @@ angular.module('talkyApp.services', [])
                 'Pluggable data layer (use something besides crossfilter)'
             ],
         },
+
+         {
+             title: 'dc.js - missing pieces',
+             decks: [
+                 'Layout - on your own: Bootstrap, Gridster, d3, etc',
+                 'Pin maps - prabobly never included',
+                 'Charts with standard defaults',
+                 'Need a way to show current filters'
+             ],
+         },
+
+          {
+              title: 'dc.js - alternatives',
+              decks: [
+                  'Chiasm?',
+                  'https://github.com/chiasm-project/chiasm'
+                  ],
+          },
 
         {
             title: 'Getting started',
