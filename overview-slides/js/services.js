@@ -22,9 +22,8 @@ angular.module('talkyApp.services', [])
                 '1. Examples',
                 '2. d3',
                 '3. Crossfilter',
-                '4. dc.js basics',
-                '5. dc.js applications',
-                '6. Resources'
+                '4. dc.js demo & code',
+                '5. Resources'
             ],
         },
 
@@ -64,7 +63,8 @@ angular.module('talkyApp.services', [])
             decks: [
                 '"Dimensions" are defined on text, dates or numeric ranges',
                 'Crossfilter builds indexes on each dimension for fast filtering',
-                'After that, underlying data is not used'
+                'After that, underlying data is not used',
+                'These are be the labels on a pie or bar chart'
             ],
         },
 
@@ -74,6 +74,16 @@ angular.module('talkyApp.services', [])
                 '"Groups" are made of dimensions and calculated values',
                 'Could be as simple as a count, or the sum of a single column',
                 'Or complex reductions (Nasdaq on dc home page)',
+                'These are the sizes of the pie slices or bars'
+            ],
+        },
+
+        {
+            title: 'Crossfilter',
+            decks: [
+                '"Filters" limit the records in crossfilter to single values or ranges in a dimension',
+                'As items move in and out of crossfilter, group values for dimensions change',
+                'Filters are set by clicking on particular items in graphs',
             ],
         },
 
@@ -88,7 +98,7 @@ angular.module('talkyApp.services', [])
          },
 
         {
-            title: 'dc - Dimensional Charting',
+            title: 'dc- origins',
             decks: [
                 'By Nick Qi Zhu - directly inspired by cross filter homepage',
                 '"Coordinated Visualizations"',
@@ -97,11 +107,10 @@ angular.module('talkyApp.services', [])
         },
 
          {
-             title: 'dc - Dimensional Charting',
+             title: 'dc - chart types',
              decks: [
                  'Charts typically take a dimension and a group',
-                 '"Coordinated Visualizations"',
-                 'Or complex reductions (Nasdaq on dc home page)',
+                 'Chart types: bar, pie, scatter, buble, table, grid, choropleth, heatmap, single number, etc',
              ],
          },
 
@@ -109,7 +118,10 @@ angular.module('talkyApp.services', [])
         {
             title: 'Planned Foreign Assistance',
             decks: [
-                'github.com/smckissock/dc-samples',
+                'http://smckissock.github.io/dc-samples/foreign-assistance/',
+                'In what year did Department of Defense spend the most money?',
+                'What country has the highest spending for malaria? (Filter to Health Category)',
+                'Which agencies do not break out plans by operating unit?',
             ],
         },
 
@@ -127,15 +139,7 @@ angular.module('talkyApp.services', [])
         //{ imgUrl: 'code-07.png' },
         //{ imgUrl: 'code-08.png' },
         
-        {
-            title: 'Questions',
-            decks: [
-                'In what year did Department of Defense spend the most money?',
-                'What country has the highest spending for malaria? (Filter to Health Category)',
-                'Which agencies do not break out plans by operating unit?',
-            ],
-        },
-
+        
         {
             title: 'dc.js Issues',
             decks: [
