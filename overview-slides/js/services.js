@@ -48,18 +48,18 @@ angular.module('talkyApp.services', [])
         },
 
         {
-            title: 'Crossfilter',
+            title: 'Crossfilter - origins',
             decks: [
                 'http://square.github.io/crossfilter/',
                 'Mike Bostock created for Square',
-                'In broswer filtering and aggregation for javacript',
+                'In broswer filtering and aggregation for javascript',
                 'Consumes JSON, CSV',
                 'Single "table" - do any joins on backend'
             ],
         },
 
         {
-            title: 'Crossfilter',
+            title: 'Crossfilter - dimensions',
             decks: [
                 '"Dimensions" are defined on text, dates or numeric ranges',
                 'Crossfilter builds indexes on each dimension for fast filtering',
@@ -69,7 +69,7 @@ angular.module('talkyApp.services', [])
         },
 
         {
-            title: 'Crossfilter',
+            title: 'Crossfilter - groups',
             decks: [
                 '"Groups" are made of dimensions and calculated values',
                 'Could be as simple as a count, or the sum of a single column',
@@ -79,7 +79,7 @@ angular.module('talkyApp.services', [])
         },
 
         {
-            title: 'Crossfilter',
+            title: 'Crossfilter - filters',
             decks: [
                 '"Filters" limit the records in crossfilter to single values or ranges in a dimension',
                 'As items move in and out of crossfilter, group values for dimensions change',
@@ -88,7 +88,7 @@ angular.module('talkyApp.services', [])
         },
 
          {
-             title: 'Crossfilter',
+             title: 'Crossfilter - olap?',
              decks: [
                  'In dimensional database terms:',
                  '',
@@ -110,7 +110,7 @@ angular.module('talkyApp.services', [])
              title: 'dc - chart types',
              decks: [
                  'Charts typically take a dimension and a group',
-                 'Chart types: bar, pie, scatter, buble, table, grid, choropleth, heatmap, single number, etc',
+                 'Chart types: bar, pie, scatter, bubble, table, grid, choropleth, heatmap, single number, etc',
              ],
          },
 
@@ -120,7 +120,7 @@ angular.module('talkyApp.services', [])
             decks: [
                 'http://smckissock.github.io/dc-samples/foreign-assistance/',
                 'In what year did Department of Defense spend the most money?',
-                'What country has the highest spending for malaria? (Filter to Health Category)',
+                'What country has the highest spending for malaria? (filter Sector)',
                 'Which agencies do not break out plans by operating unit?',
             ],
         },
@@ -145,7 +145,8 @@ angular.module('talkyApp.services', [])
             decks: [
                 'Too much data - 100k +',
                 'Too many svg elements',
-                'Commit to d3 for full benefit'
+                'Commit to d3 for full benefit',
+                'Bandwidth - tamper.js?'
             ],
         },
 
