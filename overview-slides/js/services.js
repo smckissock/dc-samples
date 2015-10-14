@@ -105,14 +105,11 @@ angular.module('talkyApp.services', [])
              ],
          },
 
-        
-
 
         {
             title: 'Planned Foreign Assistance',
             decks: [
                 'github.com/smckissock/dc-samples',
-                'Get code - Download Zip',
             ],
         },
 
@@ -149,15 +146,27 @@ angular.module('talkyApp.services', [])
         },
 
         {
-              title: 'dc.js Future',
-              decks: [
-                  'Done - basic features are there',
-                  'Used in a lot of internal apps',
-                  'Version 2.0 to be released mid July',
-                  '2.x - more chart types: small multiples, tree maps',
-                  'Pluggable data layer (use something besides crossfilter)'
-              ],
-          },
+            title: 'dc.js Future',
+            decks: [
+                'Done - basic features are there',
+                'Used in a lot of internal apps',
+                'Version 2.0 to be released soon',
+                '2.x - more chart types: small multiples, tree maps',
+                'Pluggable data layer (use something besides crossfilter)'
+            ],
+        },
+
+        {
+            title: 'Getting started',
+            decks: [
+                'Crossfilter Tutorial',
+                'http://blog.rusty.io/2012/09/17/crossfilter-tutorial',
+                'd3 book with dc chapter:', 
+                'https://leanpub.com/D3-Tips-and-Tricks',
+                'Tutorial with Leaflet',
+                'https://github.com/austinlyons/dcjs-leaflet-untappd'
+            ],
+        },
     ];
 
     return slides;
