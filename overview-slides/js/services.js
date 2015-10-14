@@ -8,7 +8,7 @@ angular.module('talkyApp.services', [])
             title: 'Interactive Graphics with dc.js & d3.js',
             decks: ['github.com/smckissock/dc-samples', 'scottmckissock@gmail.com'],
             cls: 'lightsalmon',
-            cap: 'Hello! Today we are talking about ccrossfilter, dc, and interactive graphics.'
+            //cap: 'Hello! Today we are talking about ccrossfilter, dc, and interactive graphics.'
         },
 
         //{
@@ -20,12 +20,20 @@ angular.module('talkyApp.services', [])
             title: 'Plan',
             decks: [
                 '1. Examples',
-                '2. What is dc.js good for?',
-                '3. d3.js',
-                '4. Crossfilter',
-                '5. Make a dc chart'
+                '2. d3',
+                '3. Crossfilter',
+                '4. dc.js basics',
+                '5. dc.js applications',
+                '6. Resources'
             ],
-            cap: 'Here\'s the outline for our talk tonight.'
+        },
+
+        {
+            title: 'Examples',
+            decks: [
+                'https://dc-js.github.io/dc.js/',
+                'http://smckissock.github.io/dc-samples/foreign-assistance/index.html'
+            ],
         },
 
         {
@@ -34,39 +42,71 @@ angular.module('talkyApp.services', [])
                 'd3js.org',
                 'Creates HTML or SVG DOM elements from data',
                 'Low level graphics - not a charting library',
-                'Powerfull, full featured - but steep learning curve'
+                'Inspired by Grammar of Graphics, by Leland Wilkinson (like ggplot2)',
+                'Smooth transitions as data changes',
+                'Steep learning curve?'
             ],
         },
 
         {
-            title: 'Crossfilter', 
+            title: 'Crossfilter',
             decks: [
                 'http://square.github.io/crossfilter/',
-                'In broswer slicing and dicing for javacript arrays',
+                'Mike Bostock created for Square',
+                'In broswer filtering and aggregation for javacript',
                 'Consumes JSON, CSV',
-                'Filters, groups, reduces - no joins!'
+                'Single "table" - do any joins on backend'
             ],
         },
 
         {
-            title: 'DC - Dimensional Charting',
+            title: 'Crossfilter',
             decks: [
-                'http://dc-js.github.io/dc.js/',
-                'Build on crossfilter and d3',
-                'Many chart types',
-                'Easy to use, extensible (with some effort)',
-                'Many examples'
+                '"Dimensions" are defined on text, dates or numeric ranges',
+                'Crossfilter builds indexes on each dimension for fast filtering',
+                'After that, underlying data is not used'
             ],
         },
 
         {
-            title: 'Pak Info Examples',
+            title: 'Crossfilter',
             decks: [
-                'Use "FACTS Info" reports with csv output',
-                'User Activity',
-                'Funding Status',
+                '"Groups" are made of dimensions and calculated values',
+                'Could be as simple as a count, or the sum of a single column',
+                'Or complex reductions (Nasdaq on dc home page)',
             ],
         },
+
+         {
+             title: 'Crossfilter',
+             decks: [
+                 'In dimensional database terms:',
+                 '',
+                 'Dimension = Dimension Attribute',
+                 'Group = Dimension Attribute + Measure'
+             ],
+         },
+
+        {
+            title: 'dc - Dimensional Charting',
+            decks: [
+                'By Nick Qi Zhu - directly inspired by cross filter homepage',
+                '"Coordinated Visualizations"',
+                'Multiple charts tied to a single crossfilter',
+            ],
+        },
+
+         {
+             title: 'dc - Dimensional Charting',
+             decks: [
+                 'Charts typically take a dimension and a group',
+                 '"Coordinated Visualizations"',
+                 'Or complex reductions (Nasdaq on dc home page)',
+             ],
+         },
+
+        
+
 
         {
             title: 'Planned Foreign Assistance',
